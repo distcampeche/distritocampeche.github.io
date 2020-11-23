@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/BancodeDados_Terrenos_0.js"></script>
+        <script src="data/Cadastro_Uso_Camp_1.js"></script>
+        <script src="data/PlanoDiretor_Camp_2.js"></script>
+        <script src="data/Dados_Todoscopiar_3.js"></script>
+        <script src="data/limite_fpolis_5.js"></script>
+        <script src="data/Campeche_Distrito_2019_6.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-27.71719190560141,-48.58522196283869],[-27.620928955611785,-48.38936598462783]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_Cadastro_Uso_Camp_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Cadastro_Uso_Camp_1_0(feature) {
+            switch(String(feature.properties['utilizacao'])) {
+                case 'Comercial':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(160,35,223,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Industrial':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(77,240,219,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Mista':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(28,141,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PraÃƒÂ§a':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,121,207,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PrestaÃƒÂ§ÃƒÂ£o ServiÃƒÂ§o':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,115,129,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Religioso':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(121,236,152,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Residencial':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(187,200,41,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ServiÃƒÂ§o PÃƒÂºblico':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(82,207,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Terreno sem Uso':
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,23,157,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_Cadastro_Uso_Camp_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238,175,120,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Cadastro_Uso_Camp_1');
+        map.getPane('pane_Cadastro_Uso_Camp_1').style.zIndex = 401;
+        map.getPane('pane_Cadastro_Uso_Camp_1').style['mix-blend-mode'] = 'normal';
+        var layer_Cadastro_Uso_Camp_1 = new L.geoJson(json_Cadastro_Uso_Camp_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Cadastro_Uso_Camp_1',
+            layerName: 'layer_Cadastro_Uso_Camp_1',
+            pane: 'pane_Cadastro_Uso_Camp_1',
+            onEachFeature: pop_Cadastro_Uso_Camp_1,
+            style: style_Cadastro_Uso_Camp_1_0,
+        });
+        bounds_group.addLayer(layer_Cadastro_Uso_Camp_1);
+        map.addLayer(layer_Cadastro_Uso_Camp_1);
+        function pop_PlanoDiretor_Camp_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_PlanoDiretor_Camp_2_0(feature) {
+            switch(String(feature.properties['nm_zon'])) {
+                case 'ACI':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,120,180,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'AMC':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,80,85,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'AMS':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,123,82,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'APL-E':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(195,230,162,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'APL-P':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,255,216,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'APP':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(192,195,188,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,160,44,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'APT':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(233,233,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ARM':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,173,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ARP':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,120,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ARR':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,228,181,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ATR':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(159,70,150,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'AVL':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(180,255,75,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(168,255,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ZEI':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,191,230,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'AUC':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,203,107,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'AEA':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(15,15,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(142,132,9,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ASC':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'AUE':
+                    return {
+                pane: 'pane_PlanoDiretor_Camp_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,24,180,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_PlanoDiretor_Camp_2');
+        map.getPane('pane_PlanoDiretor_Camp_2').style.zIndex = 402;
+        map.getPane('pane_PlanoDiretor_Camp_2').style['mix-blend-mode'] = 'normal';
+        var layer_PlanoDiretor_Camp_2 = new L.geoJson(json_PlanoDiretor_Camp_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PlanoDiretor_Camp_2',
+            layerName: 'layer_PlanoDiretor_Camp_2',
+            pane: 'pane_PlanoDiretor_Camp_2',
+            onEachFeature: pop_PlanoDiretor_Camp_2,
+            style: style_PlanoDiretor_Camp_2_0,
+        });
+        bounds_group.addLayer(layer_PlanoDiretor_Camp_2);
+        map.addLayer(layer_PlanoDiretor_Camp_2);
+        function pop_Dados_Todoscopiar_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Dados_Todoscopiar_3_0(feature) {
+            if (feature.properties['Valor unitário_1'] >= 0.000000 && feature.properties['Valor unitário_1'] <= 500.000000 ) {
+                return {
+                pane: 'pane_Dados_Todoscopiar_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,189,189,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Valor unitário_1'] >= 500.000000 && feature.properties['Valor unitário_1'] <= 1000.000000 ) {
+                return {
+                pane: 'pane_Dados_Todoscopiar_3',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,129,127,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Valor unitário_1'] >= 1000.000000 && feature.properties['Valor unitário_1'] <= 1500.000000 ) {
+                return {
+                pane: 'pane_Dados_Todoscopiar_3',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,67,64,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Valor unitário_1'] >= 1500.000000 && feature.properties['Valor unitário_1'] <= 10000.000000 ) {
+                return {
+                pane: 'pane_Dados_Todoscopiar_3',
+                radius: 16.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,4,0,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Dados_Todoscopiar_3');
+        map.getPane('pane_Dados_Todoscopiar_3').style.zIndex = 403;
+        map.getPane('pane_Dados_Todoscopiar_3').style['mix-blend-mode'] = 'normal';
+        var layer_Dados_Todoscopiar_3 = new L.geoJson(json_Dados_Todoscopiar_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Dados_Todoscopiar_3',
+            layerName: 'layer_Dados_Todoscopiar_3',
+            pane: 'pane_Dados_Todoscopiar_3',
+            onEachFeature: pop_Dados_Todoscopiar_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Dados_Todoscopiar_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Dados_Todoscopiar_3);
+        map.addLayer(layer_Dados_Todoscopiar_3);
+        map.createPane('pane_GooglecnSatellite_4');
+        map.getPane('pane_GooglecnSatellite_4').style.zIndex = 404;
+        var layer_GooglecnSatellite_4 = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+            pane: 'pane_GooglecnSatellite_4',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.com/intl/zh-CN_cn/permissions/geoguidelines/attr-guide.html">地图数据 ©2016 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 21
+        });
+        layer_GooglecnSatellite_4;
+        map.addLayer(layer_GooglecnSatellite_4);
+        function pop_limite_fpolis_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['mslink'] !== null ? autolinker.link(feature.properties['mslink'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cd_mun'] !== null ? autolinker.link(feature.properties['cd_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nm_mun'] !== null ? autolinker.link(feature.properties['nm_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cd_ibge200'] !== null ? autolinker.link(feature.properties['cd_ibge200'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cd_ibge201'] !== null ? autolinker.link(feature.properties['cd_ibge201'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lei'] !== null ? autolinker.link(feature.properties['lei'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dt_cadastr'] !== null ? autolinker.link(feature.properties['dt_cadastr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dt_atualiz'] !== null ? autolinker.link(feature.properties['dt_atualiz'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nu_tmp'] !== null ? autolinker.link(feature.properties['nu_tmp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nm_tmp'] !== null ? autolinker.link(feature.properties['nm_tmp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['label'] !== null ? autolinker.link(feature.properties['label'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xc'] !== null ? autolinker.link(feature.properties['xc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['yc'] !== null ? autolinker.link(feature.properties['yc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_limite_fpolis_5_0() {
+            return {
+                pane: 'pane_limite_fpolis_5',
+                opacity: 1,
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_limite_fpolis_5');
+        map.getPane('pane_limite_fpolis_5').style.zIndex = 405;
+        map.getPane('pane_limite_fpolis_5').style['mix-blend-mode'] = 'normal';
+        var layer_limite_fpolis_5 = new L.geoJson(json_limite_fpolis_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_limite_fpolis_5',
+            layerName: 'layer_limite_fpolis_5',
+            pane: 'pane_limite_fpolis_5',
+            onEachFeature: pop_limite_fpolis_5,
+            style: style_limite_fpolis_5_0,
+        });
+        bounds_group.addLayer(layer_limite_fpolis_5);
+        map.addLayer(layer_limite_fpolis_5);
+        function pop_Campeche_Distrito_2019_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_SETOR'] !== null ? autolinker.link(feature.properties['CD_SETOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_SIT'] !== null ? autolinker.link(feature.properties['CD_SIT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NM_SIT'] !== null ? autolinker.link(feature.properties['NM_SIT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_UF'] !== null ? autolinker.link(feature.properties['CD_UF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NM_UF'] !== null ? autolinker.link(feature.properties['NM_UF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SIGLA_UF'] !== null ? autolinker.link(feature.properties['SIGLA_UF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_MUN'] !== null ? autolinker.link(feature.properties['CD_MUN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NM_MUN'] !== null ? autolinker.link(feature.properties['NM_MUN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_DIST'] !== null ? autolinker.link(feature.properties['CD_DIST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NM_DIST'] !== null ? autolinker.link(feature.properties['NM_DIST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_SUBDIST'] !== null ? autolinker.link(feature.properties['CD_SUBDIST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NM_SUBDIST'] !== null ? autolinker.link(feature.properties['NM_SUBDIST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Campeche_Distrito_2019_6_0() {
+            return {
+                pane: 'pane_Campeche_Distrito_2019_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Campeche_Distrito_2019_6');
+        map.getPane('pane_Campeche_Distrito_2019_6').style.zIndex = 406;
+        map.getPane('pane_Campeche_Distrito_2019_6').style['mix-blend-mode'] = 'normal';
+        var layer_Campeche_Distrito_2019_6 = new L.geoJson(json_Campeche_Distrito_2019_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Campeche_Distrito_2019_6',
+            layerName: 'layer_Campeche_Distrito_2019_6',
+            pane: 'pane_Campeche_Distrito_2019_6',
+            onEachFeature: pop_Campeche_Distrito_2019_6,
+            style: style_Campeche_Distrito_2019_6_0,
+        });
+        bounds_group.addLayer(layer_Campeche_Distrito_2019_6);
+        map.addLayer(layer_Campeche_Distrito_2019_6);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Campeche_Distrito_2019_6.png" /> Campeche_Distrito_2019': layer_Campeche_Distrito_2019_6,'<img src="legend/limite_fpolis_5.png" /> limite_fpolis': layer_limite_fpolis_5,"Google.cn Satellite": layer_GooglecnSatellite_4,'Dados_Todos  copiar<br /><table><tr><td style="text-align: center;"><img src="legend/Dados_Todoscopiar_3_05000.png" /></td><td>0 - 500</td></tr><tr><td style="text-align: center;"><img src="legend/Dados_Todoscopiar_3_50010001.png" /></td><td>500 - 1000</td></tr><tr><td style="text-align: center;"><img src="legend/Dados_Todoscopiar_3_100015002.png" /></td><td>1000 - 1500</td></tr><tr><td style="text-align: center;"><img src="legend/Dados_Todoscopiar_3_Acimade15003.png" /></td><td>Acima de 1500</td></tr></table>': layer_Dados_Todoscopiar_3,'PlanoDiretor_Camp<br /><table><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ACI0.png" /></td><td>ACI</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_AMC1.png" /></td><td>AMC</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_AMS2.png" /></td><td>AMS</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_APLE3.png" /></td><td>APL-E</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_APLP4.png" /></td><td>APL-P</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_APP5.png" /></td><td>APP</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_APT6.png" /></td><td>APT</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ARM7.png" /></td><td>ARM</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ARP8.png" /></td><td>ARP</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ARR9.png" /></td><td>ARR</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ATR10.png" /></td><td>ATR</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_AVL11.png" /></td><td>AVL</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ZEIS12.png" /></td><td>ZEIS</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_AUC13.png" /></td><td>AUC</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_AEA14.png" /></td><td>AEA</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_ASC15.png" /></td><td>ASC</td></tr><tr><td style="text-align: center;"><img src="legend/PlanoDiretor_Camp_2_AUE16.png" /></td><td>AUE</td></tr></table>': layer_PlanoDiretor_Camp_2,'Cadastro_Uso_Camp<br /><table><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_Comercial0.png" /></td><td>Comercial</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_Industrial1.png" /></td><td>Industrial</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_Mista2.png" /></td><td>Mista</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_PraÃƒÂa3.png" /></td><td>PraÃƒÂ§a</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_PrestaÃƒÂÃƒÂoServiÃƒÂo4.png" /></td><td>PrestaÃƒÂ§ÃƒÂ£o ServiÃƒÂ§o</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_Religioso5.png" /></td><td>Religioso</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_Residencial6.png" /></td><td>Residencial</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_ServiÃƒÂoPÃƒÂºblico7.png" /></td><td>ServiÃƒÂ§o PÃƒÂºblico</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_TerrenosemUso8.png" /></td><td>Terreno sem Uso</td></tr><tr><td style="text-align: center;"><img src="legend/Cadastro_Uso_Camp_1_9.png" /></td><td></td></tr></table>': layer_Cadastro_Uso_Camp_1,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_PlanoDiretor_Camp_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((exp_label_PlanoDiretor_Camp_2_eval_expression(context) !== null?String('<div style="color: #000000; font-size: 7pt; font-family: \'Arial\', sans-serif;">' + exp_label_PlanoDiretor_Camp_2_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PlanoDiretor_Camp_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_PlanoDiretor_Camp_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_PlanoDiretor_Camp_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_PlanoDiretor_Camp_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_PlanoDiretor_Camp_2]);
+        });
+        </script>
+    </body>
+</html>
